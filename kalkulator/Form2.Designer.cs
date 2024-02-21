@@ -44,10 +44,10 @@
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("Franklin Gothic Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(89, 57);
+            this.textBox1.Font = new System.Drawing.Font("Britannic Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(89, 59);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(273, 31);
+            this.textBox1.Size = new System.Drawing.Size(273, 25);
             this.textBox1.TabIndex = 1;
             // 
             // textBox3
@@ -55,6 +55,7 @@
             this.textBox3.Font = new System.Drawing.Font("Franklin Gothic Medium", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox3.Location = new System.Drawing.Point(372, 46);
             this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(47, 49);
             this.textBox3.TabIndex = 4;
             // 
@@ -67,6 +68,7 @@
             this.button4.TabIndex = 11;
             this.button4.Text = "÷";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -77,6 +79,7 @@
             this.button3.TabIndex = 10;
             this.button3.Text = "×";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -87,6 +90,7 @@
             this.button2.TabIndex = 9;
             this.button2.Text = "-";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -97,16 +101,18 @@
             this.button1.TabIndex = 8;
             this.button1.Text = "+";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button12
             // 
             this.button12.Font = new System.Drawing.Font("Franklin Gothic Medium", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.Location = new System.Drawing.Point(714, 61);
+            this.button12.Location = new System.Drawing.Point(709, 60);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(81, 23);
             this.button12.TabIndex = 17;
             this.button12.Text = "IZRACUNAJ";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // textBox4
             // 
@@ -129,10 +135,10 @@
             // 
             // textBox5
             // 
-            this.textBox5.Font = new System.Drawing.Font("Franklin Gothic Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(430, 57);
+            this.textBox5.Font = new System.Drawing.Font("Britannic Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox5.Location = new System.Drawing.Point(430, 59);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(273, 31);
+            this.textBox5.Size = new System.Drawing.Size(273, 25);
             this.textBox5.TabIndex = 20;
             // 
             // pictureBox2
@@ -163,6 +169,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Name = "Form2";
             this.Text = "Veliki Brojevi";
+            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
