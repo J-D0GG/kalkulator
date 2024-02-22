@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMPLib;
 
 namespace kalkulator
 {
     public partial class Form4 : Form
     {
+        WindowsMediaPlayer player = new WindowsMediaPlayer();
         public Form4()
         {
             InitializeComponent();
@@ -32,13 +34,25 @@ namespace kalkulator
 
         private void Form4_Load(object sender, EventArgs e)
         {
-
+            player.URL = "matrix.mp3";
+            player.controls.play();
+            player.settings.setMode("Loop", true);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             neca neca = new neca();
             neca.Show();
+        }
+
+        private void Form4_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void Form4_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            player.controls.stop();
         }
     }
 }

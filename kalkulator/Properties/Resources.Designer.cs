@@ -135,6 +135,16 @@ namespace kalkulator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Blog_Header_Clec_26_web {
+            get {
+                object obj = ResourceManager.GetObject("Blog_Header_Clec_26_web", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap colosseum_inside_optimized {
             get {
                 object obj = ResourceManager.GetObject("colosseum-inside-optimized", resourceCulture);

@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMPLib;
 
 namespace kalkulator
 {
     public partial class Form2 : Form
     {
+        WindowsMediaPlayer player = new WindowsMediaPlayer();
+
         List<char> BOMBACLAT = new List<char>();
         List<char> ALLAHUAKBAR = new List<char>();
 
@@ -28,7 +31,9 @@ namespace kalkulator
 
         private void Form2_Load(object sender, EventArgs e)
         {
-
+            player.URL = "arab.mp3";
+            player.controls.play();
+            player.settings.setMode("Loop", true);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -159,11 +164,17 @@ namespace kalkulator
                 for(int i = 0; i<BOMBACLAT.Count; i++)
                 {
                         
+
                 }
 
 
             }
 
+        }
+
+        private void Form2_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            player.controls.stop();
         }
     }
 }

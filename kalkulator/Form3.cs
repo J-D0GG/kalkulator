@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kalkulator.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -877,7 +878,9 @@ namespace kalkulator
         {
             player.URL = "sone.mp3";
             player.controls.play();
-            
+            player.settings.setMode("Loop", true);
+
+
         }
         private void pictureBox2_Click(object sender, EventArgs e)
         {

@@ -18,8 +18,8 @@ namespace kalkulator
         public Form1()
         {
             InitializeComponent();
-            label1.Parent = pictureBox1;
-            label2.Parent = pictureBox1;
+            label1.Parent = pictureBox2;
+            label2.Parent = pictureBox2;
         }
 
         private void label1_Click(object sender, EventArgs e)

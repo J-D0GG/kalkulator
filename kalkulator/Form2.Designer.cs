@@ -169,6 +169,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Name = "Form2";
             this.Text = "Veliki Brojevi";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form2_FormClosed);
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
