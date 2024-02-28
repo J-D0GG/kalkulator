@@ -20,7 +20,7 @@ namespace kalkulator
 
         List<char> OBAMNA = new List<char>();
 
-        int[] addrez = new int[100];
+        List<int> REZ = new List<int>();
 
         string rez;
 
@@ -64,14 +64,6 @@ namespace kalkulator
                 return;
             }
 
-
-            for (int i = 0; i<100; i++)
-            {
-                addrez[i] = 0;
-            }
-
-            
-
             for(int i = 0; i < textBox1.Text.Length; i++)
             {
 
@@ -95,6 +87,7 @@ namespace kalkulator
 
                 int flagic = 0;
 
+
                 for (int i = 0; i < prvi.Length; i++)
                 {
                     if (BOMBACLAT[i] == '.')
@@ -108,6 +101,7 @@ namespace kalkulator
                     }
                     else
                     {
+                        if (BOMBACLAT[i]!='.')
                         pn++;
                     }
                 }
@@ -127,13 +121,16 @@ namespace kalkulator
                     }
                     else
                     {
-                        dn++;
+                        if (ALLAHUAKBAR[i] != '.')
+                        {
+                            dn++;
+                        }
                     }
                 }
 
                 if (pp > dp)
                 {
-                    for(int i = 0; i< pp - dp; i++)
+                    for (int i = 0; i < pp - dp; i++)
                     {
                         ALLAHUAKBAR.Insert(0, '0');
                     }
@@ -144,10 +141,26 @@ namespace kalkulator
                     {
                         BOMBACLAT.Insert(0, '0');
                     }
+
                 }
 
                 if(pn > dn)
                 {
+                    int flagamasevic = 0;
+
+                    for(int i = 0; i < ALLAHUAKBAR.Count; i++)
+                    {
+                        if (ALLAHUAKBAR[i] == '.')
+                        {
+                            flagamasevic = 1;
+                        }
+                    }
+
+                    if(flagamasevic == 0)
+                    {
+                        ALLAHUAKBAR.Add('.');
+                    }
+
                     for (int i = 0; i < pn - dn; i++)
                     {
                         ALLAHUAKBAR.Add('0');
@@ -155,19 +168,92 @@ namespace kalkulator
                 }
                 else
                 {
-                    for (int i = 0; i < dn - pn; i++)
+                    if (pn < dn)
                     {
-                        BOMBACLAT.Add('0');
+                        int flagamasevic = 0;
+
+                        for (int i = 0; i < BOMBACLAT.Count; i++)
+                        {
+                            if (BOMBACLAT[i] == '.')
+                            {
+                                flagamasevic = 1;
+                            }
+                        }
+
+                        if (flagamasevic == 0)
+                        {
+                            BOMBACLAT.Add('.');
+                        }
+
+                        for (int i = 0; i < dn - pn; i++)
+                        {
+                            BOMBACLAT.Add('0');
+                        }
                     }
                 }
 
-                for(int i = 0; i<BOMBACLAT.Count; i++)
+                for (int i = 0; i < BOMBACLAT.Count; i++)
                 {
-                        
+                    rez += BOMBACLAT[i];
+                }
+                textBox2.Text = rez;
 
+                rez = "";
+
+                for (int i = 0; i < ALLAHUAKBAR.Count; i++)
+                {
+                    rez += ALLAHUAKBAR[i];
+                }
+                textBox6.Text = rez;
+
+
+                for (int i = 0; i<BOMBACLAT.Count; i++)
+                {
+                    REZ.Add(0);
                 }
 
+                for (int i = BOMBACLAT.Count-1; i >= 0; i--)
+                {
 
+                    if (BOMBACLAT[i] == '.')
+                    {
+                        REZ[i + 1] = REZ[i];
+                        OBAMNA.Add('.');
+                    }
+                    else
+                    {
+
+                        //int allah = Convert.ToInt32(ALLAHUAKBAR[i]) - 48;
+                        //int bomba = Convert.ToInt32(BOMBACLAT[i]) - 48;
+                        int allah = int.Parse(ALLAHUAKBAR[i].ToString());
+                        int bomba = int.Parse(BOMBACLAT[i].ToString());
+                        int rezultasevic = (bomba + allah + REZ[i]) % 10;
+                        OBAMNA.Insert(OBAMNA.Count,Convert.ToChar(rezultasevic+4800));
+
+                        /*
+                        if (i != 0)
+                        {
+                            REZ[i - 1] = (allah + bomba + REZ[i]) / 10;
+                        }
+                        else
+                        {
+                            if(((allah + bomba + REZ[i]) / 10) > 0)
+                            {
+                                OBAMNA.Add(Convert.ToChar((allah + bomba + REZ[i]) / 10));
+                            }
+                        }
+                        */
+                    }
+                }
+
+                
+
+                for(int i = 0; i < OBAMNA.Count; i++)
+                {
+                    rez += OBAMNA[i];
+                }
+
+                textBox4.Text = rez;
             }
 
         }
