@@ -18,13 +18,19 @@ namespace kalkulator
         public List<int> PRVI = new List<int>();
         public List<int> DRUGI = new List<int>();
 
-        public List<int> OBAMNA = new List<int>();
-
         public List<int> REZ = new List<int>();
+
+        public List<int> OSTATAK = new List<int>();
 
         string rez;
 
+        
+        int PrviPre = 0;
+        int PrviNakon = 0;
 
+        
+        int DrugiPre = 0;
+        int DrugiNakon = 0;
 
         public Form2()
         {
@@ -36,6 +42,8 @@ namespace kalkulator
             player.URL = "arab.mp3";
             player.controls.play();
             player.settings.setMode("Loop", true);
+
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -61,12 +69,7 @@ namespace kalkulator
         private void button12_Click(object sender, EventArgs e)
         {
             string prvi = textBox1.Text;
-            int PrviPre = 0;
-            int PrviNakon = 0;
-
             string drugi = textBox5.Text;
-            int DrugiPre = 0;
-            int DrugiNakon = 0;
 
 
             if (textBox1.Text == "" || textBox3.Text == "" || textBox5.Text == "")
@@ -103,32 +106,12 @@ namespace kalkulator
                 
             }
 
-            PreiNakon(PrviPre, PrviNakon, DrugiPre, DrugiNakon);
-
-            
-            for(int i = 0; i < PRVI.Count; i++)
-            {
-                textBox2.Text += Convert.ToString(PRVI[i]);
-            }
-            for (int i = 0; i < DRUGI.Count; i++)
-            {
-                textBox6.Text += Convert.ToString(DRUGI[i]);
-            }
-            
-
-            /*
-            if (textBox3.Text == " +")
-            {
-                Saberi();
-                PreiNakon(PrviPre, PrviNakon, DrugiPre, DrugiNakon);
-            }
-            */
-
-
+            if(textBox3.Text == " +") { Saberi(); }
+            if (textBox3.Text == "  -") { Oduzmi(PRVI,DRUGI); }
 
         }
 
-        public void PreiNakon(int PrviPre, int PrviNakon, int DrugiPre, int DrugiNakon)
+        public void PreiNakon()
         {
             int flag = 0;
 
@@ -240,93 +223,178 @@ namespace kalkulator
             }
         }
 
+        public void Oduzmi(List<int> PRVI, List<int> DRUGI)
+        {
+            rez = "";
+            PreiNakon();
+
+            int manjevece = ManjeVece(PRVI, DRUGI);
+
+            if (manjevece == 0)
+            {
+                textBox4.Text = "0";
+                Clear();
+                return;
+            }
+
+            /*ODUZIMANJE*/
+
+            for (int i = 0; i < PRVI.Count; i++)
+            {
+                OSTATAK.Add(0);
+            }
+            for (int i = PRVI.Count - 1; i >= 0; i--)
+            {
+
+                if (PRVI[i] == -1)
+                {
+                    OSTATAK[i - 1] = OSTATAK[i];
+                    REZ.Insert(0, -1);
+                    continue;
+                }
+
+                if (PRVI[i] - (DRUGI[i] + OSTATAK[i]) > 0)
+                {
+                    REZ.Insert(0, PRVI[i] - (DRUGI[i] + OSTATAK[i]));
+                }
+                else
+                {
+                    if (i != 0)
+                    {
+                        REZ.Insert(0, 10 - (PRVI[i] - (DRUGI[i] + OSTATAK[i])));
+                        OSTATAK[i - 1] = 1;
+                    }
+                    else
+                    {
+                        REZ.Insert(0, PRVI[i] - (DRUGI[i] + OSTATAK[i]));
+                    }
+                }
+            }
+
+            for (int i = 0; i < REZ.Count; i++)
+            {
+                if (REZ[i] == -1)
+                {
+                    rez += ".";
+                }
+                else
+                {
+                    rez += Convert.ToString(REZ[i]);
+                }
+            }
+
+            textBox4.Text = rez;
+
+            Clear();
+
+
+
+
+
+        }
+
+        public int ManjeVece(List<int> PRVI, List<int> DRUGI)
+        {
+            for(int i = 0;i < PRVI.Count;i++)
+            {
+                if (PRVI[i] > DRUGI[i])
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
+            }
+            return 0;
+        }
         public void Saberi()
         {
-            /*
-
-            string prvi = textBox1.Text;
-            int PrviPre = 0;
-            int PrviNakon = 0;
-
-            string drugi = textBox5.Text;
-            int DrugiPre = 0;
-            int DrugiNakon = 0;
-
-            int flag = 0;
-
-
-            
-
-            for (int i = 0; i < PRVI.Count; i++)
-            {
-                rez += Convert.ToString(PRVI[i]);
-            }
-            textBox2.Text = rez;
-
             rez = "";
+            PreiNakon();
 
-            for (int i = 0; i < DRUGI.Count; i++)
+            //for (int i = 0; i < PRVI.Count; i++)
+            //{
+            //    textBox2.Text += Convert.ToString(PRVI[i]);
+            //}
+            //for (int i = 0; i < DRUGI.Count; i++)
+            //{
+            //    textBox6.Text += Convert.ToString(DRUGI[i]);
+            //}
+
+            for (int i = 0; i < PRVI.Count+1; i++)
             {
-                rez += Convert.ToString(DRUGI[i]);
-            }
-            textBox6.Text = rez;
-
-            
-
-            for (int i = 0; i < PRVI.Count; i++)
-            {
-                REZ.Add(0);
+                OSTATAK.Add(0);
             }
 
             for (int i = PRVI.Count - 1; i >= 0; i--)
             {
 
-                if (PRVI[i] == '.')
+                if (PRVI[i] == -1)
                 {
-                    REZ[i + 1] = REZ[i];
-                    OBAMNA.Add('.');
+                    OSTATAK[i - 1] = OSTATAK[i];
+                    REZ.Insert(0, -1);
+                    continue;
+                }
+
+
+                REZ.Insert(0, (PRVI[i] + DRUGI[i] + OSTATAK[i]) % 10);
+
+                if (i != 0)
+                {
+                    OSTATAK[i - 1] = (DRUGI[i] + PRVI[i] + OSTATAK[i]) / 10;
                 }
                 else
                 {
-
-                    //int allah = Convert.ToInt32(ALLAHUAKBAR[i]) - 48;
-                    //int bomba = Convert.ToInt32(BOMBACLAT[i]) - 48;
-                    int allah = int.Parse(DRUGI[i].ToString());
-                    int bomba = int.Parse(PRVI[i].ToString());
-                    int rezultasevic = (bomba + allah + REZ[i]) % 10;
-                    OBAMNA.Insert(OBAMNA.Count, Convert.ToChar(rezultasevic + 4800));
-
-                    
-                    if (i != 0)
+                    if (((DRUGI[i] + PRVI[i] + OSTATAK[i]) / 10) > 0)
                     {
-                        REZ[i - 1] = (allah + bomba + REZ[i]) / 10;
+                        REZ.Insert(0, (DRUGI[i] + PRVI[i] + OSTATAK[i]) / 10);
                     }
-                    else
-                    {
-                        if(((allah + bomba + REZ[i]) / 10) > 0)
-                        {
-                            OBAMNA.Add(Convert.ToChar((allah + bomba + REZ[i]) / 10));
-                        }
-                    }
-                    
+                }
+
+
+            }
+
+
+
+            for (int i = 0; i < REZ.Count; i++)
+            {
+                if (REZ[i] == -1)
+                {
+                    rez += ".";
+                }
+                else
+                {
+                    rez += Convert.ToString(REZ[i]);
                 }
             }
 
-
-
-            for (int i = 0; i < OBAMNA.Count; i++)
-            {
-                rez += OBAMNA[i];
-            }
-
             textBox4.Text = rez;
-            */
 
+            Clear();
+
+        }
+
+        public void Clear()
+        {
+            PRVI.Clear();
+            DRUGI.Clear();
+            REZ.Clear();
+            OSTATAK.Clear();
+            PrviPre = 0;
+            PrviNakon = 0;
+            DrugiPre = 0;
+            DrugiNakon = 0;
         }
 
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
         {
             player.controls.stop();
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
