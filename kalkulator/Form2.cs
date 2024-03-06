@@ -15,14 +15,16 @@ namespace kalkulator
     {
         WindowsMediaPlayer player = new WindowsMediaPlayer();
 
-        List<char> BOMBACLAT = new List<char>();
-        List<char> ALLAHUAKBAR = new List<char>();
+        public List<int> PRVI = new List<int>();
+        public List<int> DRUGI = new List<int>();
 
-        List<char> OBAMNA = new List<char>();
+        public List<int> OBAMNA = new List<int>();
 
-        List<int> REZ = new List<int>();
+        public List<int> REZ = new List<int>();
 
         string rez;
+
+
 
         public Form2()
         {
@@ -58,203 +60,267 @@ namespace kalkulator
 
         private void button12_Click(object sender, EventArgs e)
         {
+            string prvi = textBox1.Text;
+            int PrviPre = 0;
+            int PrviNakon = 0;
+
+            string drugi = textBox5.Text;
+            int DrugiPre = 0;
+            int DrugiNakon = 0;
+
+
             if (textBox1.Text == "" || textBox3.Text == "" || textBox5.Text == "")
             {
                 MessageBox.Show("Mashallah! Morate uneti brojeve i operaciju ");
                 return;
             }
 
-            for(int i = 0; i < textBox1.Text.Length; i++)
-            {
+            /*UNOS BROJEVA U LISTE*/
 
-                BOMBACLAT.Add(textBox1.Text[i]);
+            for (int i = 0; i < textBox1.Text.Length; i++)
+            {
+                if (textBox1.Text[i] == '.')
+                {
+                    PRVI.Add(-1);
+                }
+                else
+                {
+                    PRVI.Add(int.Parse(textBox1.Text[i].ToString()));
+                }
+                
             }
 
             for (int i = 0; i < textBox5.Text.Length; i++)
             {
-                ALLAHUAKBAR.Add(textBox5.Text[i]);
+                if (textBox5.Text[i] == '.')
+                {
+                    DRUGI.Add(-1);
+                }
+                else
+                {
+                    DRUGI.Add(int.Parse(textBox5.Text[i].ToString()));
+                }
+                
             }
 
-            if(textBox3.Text == " +")
-            {
-                string prvi = textBox1.Text;
-                int pp = 0;
-                int pn = 0;
-                
-                string drugi = textBox5.Text;
-                int dp = 0;
-                int dn = 0;
+            PreiNakon(PrviPre, PrviNakon, DrugiPre, DrugiNakon);
 
+            
+            for(int i = 0; i < PRVI.Count; i++)
+            {
+                textBox2.Text += Convert.ToString(PRVI[i]);
+            }
+            for (int i = 0; i < DRUGI.Count; i++)
+            {
+                textBox6.Text += Convert.ToString(DRUGI[i]);
+            }
+            
+
+            /*
+            if (textBox3.Text == " +")
+            {
+                Saberi();
+                PreiNakon(PrviPre, PrviNakon, DrugiPre, DrugiNakon);
+            }
+            */
+
+
+
+        }
+
+        public void PreiNakon(int PrviPre, int PrviNakon, int DrugiPre, int DrugiNakon)
+        {
+            int flag = 0;
+
+            for (int i = 0; i < PRVI.Count; i++)
+            {
+                if (PRVI[i] == -1)
+                {
+                    flag = 1;
+                }
+
+                if (flag == 0)
+                {
+                    PrviPre++;
+                }
+                else
+                {
+                    if (PRVI[i] != -1)
+                    {
+                        PrviNakon++;
+                    }
+
+                }
+            }
+
+            flag = 0;
+
+            for (int i = 0; i < DRUGI.Count; i++)
+            {
+                if (DRUGI[i] == -1)
+                {
+                    flag = 1;
+                }
+
+                if (flag == 0)
+                {
+                    DrugiPre++;
+                }
+                else
+                {
+                    if (DRUGI[i] != -1)
+                    {
+                        DrugiNakon++;
+                    }
+                }
+            }
+
+            if (PrviPre > DrugiPre)
+            {
+                for (int i = 0; i < PrviPre - DrugiPre; i++)
+                {
+                    DRUGI.Insert(0, 0);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < DrugiPre - PrviPre; i++)
+                {
+                    PRVI.Insert(0, 0);
+                }
+
+            }
+
+            if (PrviNakon > DrugiNakon)
+            {
                 int flagic = 0;
 
-
-                for (int i = 0; i < prvi.Length; i++)
+                for (int i = 0; i < DRUGI.Count; i++)
                 {
-                    if (BOMBACLAT[i] == '.')
+                    if (DRUGI[i] == -1)
                     {
                         flagic = 1;
-                    }
-
-                    if(flagic == 0)
-                    {
-                        pp++;
-                    }
-                    else
-                    {
-                        if (BOMBACLAT[i]!='.')
-                        pn++;
                     }
                 }
 
-                flagic = 0;
-
-                for (int i = 0; i < drugi.Length; i++)
+                if (flagic == 0)
                 {
-                    if (ALLAHUAKBAR[i] == '.')
+                    DRUGI.Add(-1);
+                }
+
+                for (int i = 0; i < PrviNakon - DrugiNakon; i++)
+                {
+                    DRUGI.Add(0);
+                }
+            }
+            else
+            {
+                if (PrviNakon < DrugiNakon)
+                {
+                    int flagic = 0;
+
+                    for (int i = 0; i < PRVI.Count; i++)
                     {
-                        flagic = 1;
+                        if (PRVI[i] == -1)
+                        {
+                            flagic = 1;
+                        }
                     }
 
                     if (flagic == 0)
                     {
-                        dp++;
+                        PRVI.Add(-1);
                     }
-                    else
+
+                    for (int i = 0; i < DrugiNakon - PrviNakon; i++)
                     {
-                        if (ALLAHUAKBAR[i] != '.')
-                        {
-                            dn++;
-                        }
+                        PRVI.Add(0);
                     }
                 }
-
-                if (pp > dp)
-                {
-                    for (int i = 0; i < pp - dp; i++)
-                    {
-                        ALLAHUAKBAR.Insert(0, '0');
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < dp - pp; i++)
-                    {
-                        BOMBACLAT.Insert(0, '0');
-                    }
-
-                }
-
-                if(pn > dn)
-                {
-                    int flagamasevic = 0;
-
-                    for(int i = 0; i < ALLAHUAKBAR.Count; i++)
-                    {
-                        if (ALLAHUAKBAR[i] == '.')
-                        {
-                            flagamasevic = 1;
-                        }
-                    }
-
-                    if(flagamasevic == 0)
-                    {
-                        ALLAHUAKBAR.Add('.');
-                    }
-
-                    for (int i = 0; i < pn - dn; i++)
-                    {
-                        ALLAHUAKBAR.Add('0');
-                    }
-                }
-                else
-                {
-                    if (pn < dn)
-                    {
-                        int flagamasevic = 0;
-
-                        for (int i = 0; i < BOMBACLAT.Count; i++)
-                        {
-                            if (BOMBACLAT[i] == '.')
-                            {
-                                flagamasevic = 1;
-                            }
-                        }
-
-                        if (flagamasevic == 0)
-                        {
-                            BOMBACLAT.Add('.');
-                        }
-
-                        for (int i = 0; i < dn - pn; i++)
-                        {
-                            BOMBACLAT.Add('0');
-                        }
-                    }
-                }
-
-                for (int i = 0; i < BOMBACLAT.Count; i++)
-                {
-                    rez += BOMBACLAT[i];
-                }
-                textBox2.Text = rez;
-
-                rez = "";
-
-                for (int i = 0; i < ALLAHUAKBAR.Count; i++)
-                {
-                    rez += ALLAHUAKBAR[i];
-                }
-                textBox6.Text = rez;
-
-
-                for (int i = 0; i<BOMBACLAT.Count; i++)
-                {
-                    REZ.Add(0);
-                }
-
-                for (int i = BOMBACLAT.Count-1; i >= 0; i--)
-                {
-
-                    if (BOMBACLAT[i] == '.')
-                    {
-                        REZ[i + 1] = REZ[i];
-                        OBAMNA.Add('.');
-                    }
-                    else
-                    {
-
-                        //int allah = Convert.ToInt32(ALLAHUAKBAR[i]) - 48;
-                        //int bomba = Convert.ToInt32(BOMBACLAT[i]) - 48;
-                        int allah = int.Parse(ALLAHUAKBAR[i].ToString());
-                        int bomba = int.Parse(BOMBACLAT[i].ToString());
-                        int rezultasevic = (bomba + allah + REZ[i]) % 10;
-                        OBAMNA.Insert(OBAMNA.Count,Convert.ToChar(rezultasevic+4800));
-
-                        /*
-                        if (i != 0)
-                        {
-                            REZ[i - 1] = (allah + bomba + REZ[i]) / 10;
-                        }
-                        else
-                        {
-                            if(((allah + bomba + REZ[i]) / 10) > 0)
-                            {
-                                OBAMNA.Add(Convert.ToChar((allah + bomba + REZ[i]) / 10));
-                            }
-                        }
-                        */
-                    }
-                }
-
-                
-
-                for(int i = 0; i < OBAMNA.Count; i++)
-                {
-                    rez += OBAMNA[i];
-                }
-
-                textBox4.Text = rez;
             }
+        }
+
+        public void Saberi()
+        {
+            /*
+
+            string prvi = textBox1.Text;
+            int PrviPre = 0;
+            int PrviNakon = 0;
+
+            string drugi = textBox5.Text;
+            int DrugiPre = 0;
+            int DrugiNakon = 0;
+
+            int flag = 0;
+
+
+            
+
+            for (int i = 0; i < PRVI.Count; i++)
+            {
+                rez += Convert.ToString(PRVI[i]);
+            }
+            textBox2.Text = rez;
+
+            rez = "";
+
+            for (int i = 0; i < DRUGI.Count; i++)
+            {
+                rez += Convert.ToString(DRUGI[i]);
+            }
+            textBox6.Text = rez;
+
+            
+
+            for (int i = 0; i < PRVI.Count; i++)
+            {
+                REZ.Add(0);
+            }
+
+            for (int i = PRVI.Count - 1; i >= 0; i--)
+            {
+
+                if (PRVI[i] == '.')
+                {
+                    REZ[i + 1] = REZ[i];
+                    OBAMNA.Add('.');
+                }
+                else
+                {
+
+                    //int allah = Convert.ToInt32(ALLAHUAKBAR[i]) - 48;
+                    //int bomba = Convert.ToInt32(BOMBACLAT[i]) - 48;
+                    int allah = int.Parse(DRUGI[i].ToString());
+                    int bomba = int.Parse(PRVI[i].ToString());
+                    int rezultasevic = (bomba + allah + REZ[i]) % 10;
+                    OBAMNA.Insert(OBAMNA.Count, Convert.ToChar(rezultasevic + 4800));
+
+                    
+                    if (i != 0)
+                    {
+                        REZ[i - 1] = (allah + bomba + REZ[i]) / 10;
+                    }
+                    else
+                    {
+                        if(((allah + bomba + REZ[i]) / 10) > 0)
+                        {
+                            OBAMNA.Add(Convert.ToChar((allah + bomba + REZ[i]) / 10));
+                        }
+                    }
+                    
+                }
+            }
+
+
+
+            for (int i = 0; i < OBAMNA.Count; i++)
+            {
+                rez += OBAMNA[i];
+            }
+
+            textBox4.Text = rez;
+            */
 
         }
 
