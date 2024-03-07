@@ -584,6 +584,15 @@ namespace kalkulator
                         return;
                     }
 
+                    if(banovicStrahinja - strahinjicBane == 0)
+                    {
+                        MessageBox.Show("Greska! Rezultat ne moze biti 0!");
+                        zumajahad.Clear();
+                        hadzenadin.Clear();
+                        resetIndexa();
+                        return;
+                    }
+
                     if (rez < 4000)
                     {
                         rez = banovicStrahinja - strahinjicBane;
