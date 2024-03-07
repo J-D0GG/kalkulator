@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -163,11 +164,43 @@ namespace kalkulator
 
             if(textBox3.Text == " ×")
             {
+                for(int i = 0;i < textBox1.Text.Length; i++)
+                {
+                    if (textBox1.Text[i] == ',' | textBox1.Text[i] == '.')
+                    {
+                        MessageBox.Show("Nece da moze decimalni broj!");
+                        return;
+                    }
+                }
+                for (int i = 0; i < textBox5.Text.Length; i++)
+                {
+                    if (textBox5.Text[i] == ',' | textBox5.Text[i] == '.')
+                    {
+                        MessageBox.Show("Nece da moze decimalni broj!");
+                        return;
+                    }
+                }
                 Pomnozi(textBox1.Text, textBox5.Text);
             }
 
             if(textBox3.Text == " ÷")
             {
+                for (int i = 0; i < textBox1.Text.Length; i++)
+                {
+                    if (textBox1.Text[i] == ',' | textBox1.Text[i] == '.')
+                    {
+                        MessageBox.Show("Nece da moze decimalni broj!");
+                        return;
+                    }
+                }
+                for (int i = 0; i < textBox5.Text.Length; i++)
+                {
+                    if (textBox5.Text[i] == ',' | textBox5.Text[i] == '.')
+                    {
+                        MessageBox.Show("Nece da moze decimalni broj!");
+                        return;
+                    }
+                }
                 Podeli(textBox1.Text, textBox5.Text);
             }
         }
